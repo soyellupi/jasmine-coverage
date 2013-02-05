@@ -26,10 +26,6 @@ To use jasmine-coverage, run the rake task.
 
     bundle exec rake jasmine:coverage
 
-Optionally, add a failure level percentage.
-
-    bundle exec rake jasmine:coverage JASMINE_COVERAGE_MINIMUM=75
-
 # Output
 
 You will see the tests execute, then a large blob of text, and finally a summary of the test coverage results.
@@ -46,6 +42,18 @@ Files generated will be
     target/jscoverage/jscoverage.html  -  The visual report shell
     target/jscoverage/jscoverage.json  -  The report data
     target/jscoverage/jscoverage-test-rig.html  -  The actual page that the tests executed in
+
+# Configuration
+
+You can set a failure level percentage.
+
+    bundle exec rake jasmine:coverage JASMINE_COVERAGE_MINIMUM=75
+
+In addition, as jasmine-coverage has to create a single folder environment for the Javascript sandbox to function correctly, it has to copy
+files into the _target/jscoverage/test_rig_ folder. By default, this is then cleaned up for you if the tests pass. If you'd like to see what files
+it generates regardless, you can specify that in an environment variable.
+
+    bundle exec rake jasmine:coverage JASMINE_COVERAGE_KEEP_TEST_RIG=true
 
 # How it works
 

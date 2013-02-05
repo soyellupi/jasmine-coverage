@@ -12,16 +12,16 @@ module Jasmine::Headless
       ret = old_write
       str = File.open(all_tests_filename, "rb").read
 
-      testrigfolder = Jasmine::Coverage.output_dir+"/testrig"
-      FileUtils.mkdir_p testrigfolder
+      test_rigfolder = Jasmine::Coverage.output_dir+"/test_rig"
+      FileUtils.mkdir_p test_rigfolder
 
-      p "\nCopying all view files and potential javascript fixture folders so the JS has access to the html fixtures.\n"
-      FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../../spec", "#{testrigfolder}/spec")
-      FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../../app", "#{testrigfolder}/app")
-      FileUtils.mkdir_p "#{testrigfolder}/target/fixtures"
-      FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../fixtures", "#{testrigfolder}/target/fixtures")
-      FileUtils.mkdir_p "#{testrigfolder}/target/views"
-      FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../views", "#{testrigfolder}/target/views")
+      p "Copying all view files and potential javascript fixture folders so the jasmine-coverage run has access to the html fixtures."
+      #FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../../spec", "#{test_rigfolder}/spec")
+      #FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../../app", "#{test_rigfolder}/app")
+      FileUtils.mkdir_p "#{test_rigfolder}/target/fixtures"
+      FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../fixtures", "#{test_rigfolder}/target/fixtures") rescue nil
+      FileUtils.mkdir_p "#{test_rigfolder}/target/views"
+      FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../views", "#{test_rigfolder}/target/views") rescue nil
 
       jss = str.scan(/<script type="text\/javascript" src="(.*)"><\/script>/)
       jss << str.scan(/<link rel="stylesheet" href="(.*)" type="text\/css" \/>/)
@@ -30,7 +30,7 @@ module Jasmine::Headless
       jss.each { |s|
         js = File.basename(s)
         str.sub!(s, js)
-        if File.exists?("#{testrigfolder}/#{js}") && js != 'index.js'
+        if File.exists?("#{test_rigfolder}/#{js}") && js != 'index.js'
           s = "\n\n*****************************************************************************************************************\n"
           s = s + "Cannot copy file '#{js}' into jasmine coverage test rig folder.\n"
           s = s + "There is already another file of that name. You either have two files with the same name (but in different paths)\n"
@@ -40,16 +40,14 @@ module Jasmine::Headless
           s = s + "*****************************************************************************************************************\n\n"
           raise s
         end
-        FileUtils.cp(s, testrigfolder)
+        FileUtils.cp(s, test_rigfolder)
       }
 
-      outfile = "#{testrigfolder}/jscoverage-test-rig.html"
+      outfile = "#{test_rigfolder}/jscoverage-test-rig.html"
       aFile = File.new(outfile, "w")
       aFile.write(str)
       aFile.close
 
-      puts "A copy of the complete page that was used as the test environment can be found here:"
-      puts "#{outfile}"
       ret
     end
   end

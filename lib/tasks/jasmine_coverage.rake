@@ -40,6 +40,7 @@ if env =~ /^(development|test)$/
 
       Jasmine::Coverage.resources = files_map
       Jasmine::Coverage.output_dir = output_dir
+      test_rig_folder = "#{Jasmine::Coverage.output_dir}/test_rig"
 
       puts "\nCoverage will now be run. Expect a large block of compiled coverage data. This will be processed for you into target/jscoverage.\n\n"
 
@@ -57,13 +58,20 @@ if env =~ /^(development|test)$/
       errStr = errStr +"4) The source files are being loaded out of sequence (so global variables are not being declared in order)\n"
       errStr = errStr +"   To check this, run bundle exec jasmine-headless-webkit -l to see the ordering\n"
       errStr = errStr +"\nIn any case, try running the standard jasmine command to get better errors:\n\nbundle exec jasmine:headless\n"
-      errStr = errStr +"\nFinally, try opening the testrig in firefox to see the tests run in a browser and get a stacktrace. "
+      errStr = errStr +"\nFinally, try opening the test_rig in firefox to see the tests run in a browser and get a stacktrace. "
       errStr = errStr +"Chrome has strict security settings that make this difficult since it accesses the local filesystem from Javascript (but you can switch the settings off at the command line)\n\n"
       errStr = errStr +"\n**********************************************************************************************\n"
       errStr = errStr +"\nThe test rig file needs to load JS directly off disk, which Chrome prevents by default. Your best bet is to open the rig in Firefox.\n"
-      errStr = errStr +"\nThe file can be found here: #{Jasmine::Coverage.output_dir}/testrig/jscoverage-test-rig.html\n"
+      errStr = errStr +"\nThe file can be found here: #{test_rig_folder}/jscoverage-test-rig.html\n"
       errStr = errStr +"\n**********************************************************************************************\n"
       fail errStr if status_code == 1
+
+      # Delete the test_rig folder if not required
+      if ENV['JASMINE_COVERAGE_KEEP_TEST_RIG']
+        p "A copy of the page and files that were used as the jasmine test environment can be found here: #{test_rig_folder}"
+      else
+        FileUtils.rm_rf test_rig_folder
+      end
 
       # Obtain the console log, which includes the coverage report encoded within it
       contents = File.open("#{output_dir}/rawreport.txt") { |f| f.read }
@@ -89,7 +97,6 @@ if env =~ /^(development|test)$/
         conf = (ENV['JSCOVERAGE_MINIMUM'] || ENV['JASMINE_COVERAGE_MINIMUM'])
         fail "Coverage Fail: Javascript coverage was less than #{conf}%. It was #{coverage_pc}%." if conf && coverage_pc < conf.to_i
       end
-
     end
 
     def instrument folder, instrumented_sub_dir
