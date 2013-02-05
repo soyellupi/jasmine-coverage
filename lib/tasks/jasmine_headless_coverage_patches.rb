@@ -12,16 +12,18 @@ module Jasmine::Headless
       ret = old_write
       str = File.open(all_tests_filename, "rb").read
 
-      test_rigfolder = Jasmine::Coverage.output_dir+"/test_rig"
+      test_rigfolder = Jasmine::Coverage.output_dir+"/test-rig"
       FileUtils.mkdir_p test_rigfolder
 
       p "Copying all view files and potential javascript fixture folders so the jasmine-coverage run has access to the html fixtures."
-      #FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../../spec", "#{test_rigfolder}/spec")
-      #FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../../app", "#{test_rigfolder}/app")
       FileUtils.mkdir_p "#{test_rigfolder}/target/fixtures"
       FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../fixtures", "#{test_rigfolder}/target/fixtures") rescue nil
       FileUtils.mkdir_p "#{test_rigfolder}/target/views"
       FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../views", "#{test_rigfolder}/target/views") rescue nil
+
+      # Here we must also copy the spec and app folders to that we have access to all the files if we need them for the test rig
+      FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../../spec", "#{test_rigfolder}/spec")
+      FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../../app", "#{test_rigfolder}/app")
 
       jss = str.scan(/<script type="text\/javascript" src="(.*)"><\/script>/)
       jss << str.scan(/<link rel="stylesheet" href="(.*)" type="text\/css" \/>/)

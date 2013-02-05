@@ -40,7 +40,7 @@ if env =~ /^(development|test)$/
 
       Jasmine::Coverage.resources = files_map
       Jasmine::Coverage.output_dir = output_dir
-      test_rig_folder = "#{Jasmine::Coverage.output_dir}/test_rig"
+      test_rig_folder = "#{Jasmine::Coverage.output_dir}/test-rig"
 
       puts "\nCoverage will now be run. Expect a large block of compiled coverage data. This will be processed for you into target/jscoverage.\n\n"
 
@@ -58,7 +58,7 @@ if env =~ /^(development|test)$/
       errStr = errStr +"4) The source files are being loaded out of sequence (so global variables are not being declared in order)\n"
       errStr = errStr +"   To check this, run bundle exec jasmine-headless-webkit -l to see the ordering\n"
       errStr = errStr +"\nIn any case, try running the standard jasmine command to get better errors:\n\nbundle exec jasmine:headless\n"
-      errStr = errStr +"\nFinally, try opening the test_rig in firefox to see the tests run in a browser and get a stacktrace. "
+      errStr = errStr +"\nFinally, try opening the test-rig in firefox to see the tests run in a browser and get a stacktrace. "
       errStr = errStr +"Chrome has strict security settings that make this difficult since it accesses the local filesystem from Javascript (but you can switch the settings off at the command line)\n\n"
       errStr = errStr +"\n**********************************************************************************************\n"
       errStr = errStr +"\nThe test rig file needs to load JS directly off disk, which Chrome prevents by default. Your best bet is to open the rig in Firefox.\n"
