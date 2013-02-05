@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/firstbanco/jasmine-coverage'
   s.summary = 'A blend of JS unit testing and coverage'
 
-  s.files = Dir["{lib}/**/*"] + ["README.md"]
+  s.files = Dir["{lib}/**/*"] + ["README.md", 'Rakefile']
   s.require_paths = ['lib']
   s.test_files = Dir['test/**/*']
 

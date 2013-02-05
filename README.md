@@ -20,6 +20,10 @@ the master branch of that project.
     gem 'jasmine-coverage'
     gem 'jasmine-headless-webkit', :git => 'git://github.com/johnbintz/jasmine-headless-webkit.git'
 
+Finally, add this to your Rakefile
+
+    require 'jasmine/coverage'
+
 # Usage
 
 To use jasmine-coverage, run the rake task.
