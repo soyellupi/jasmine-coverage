@@ -31,11 +31,13 @@ module Jasmine::Headless
         js = File.basename(s)
         str.sub!(s, js)
         if File.exists?("#{testrigfolder}/#{js}") && js != 'index.js'
-          s = "\n\n*******************************************************************\n"
+          s = "\n\n*****************************************************************************************************************\n"
           s = s + "Cannot copy file '#{js}' into jasmine coverage test rig folder.\n"
           s = s + "There is already another file of that name. You either have two files with the same name (but in different paths)\n"
           s = s + "or your filename is the same as that from a third party vendor.\n"
-          s = s + "*******************************************************************\n\n"
+          s = s + "The problem stems from the fact that to run all js files from one folder (as is required by a serverless jasmine\n"
+          s = s + "test), all your js files must have unique names, even if they are in different folders in your app hierarchy.\n"
+          s = s + "*****************************************************************************************************************\n\n"
           raise s
         end
         FileUtils.cp(s, testrigfolder)
