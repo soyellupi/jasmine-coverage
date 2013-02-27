@@ -51,30 +51,31 @@ if env =~ /^(development|test)$/
           :reporters => [['File', "#{output_dir}/rawreport.txt"]]
       )
       errStr = <<-EOS
-      JSCoverage exited with error code: #{status_code}.
-      This implies one of five things:
-      0) Your JS files had exactly zero instructions. Are they all blank or just comments?
-      1) A test failed (run bundle exec rake jasmine:headless to see a better error)
-      2) The sourcecode has a syntax error (which JSLint should find)
-      3) An error occurred in a deferred block, e.g. a setTimeout or underscore _.defer. This caused a window error which Jasmine will never see.
-      4) The source files are being loaded out of sequence (so global variables are not being declared in order)
-         To check this, run bundle exec jasmine-headless-webkit -l to see the ordering
+JSCoverage exited with error code: #{status_code}
 
-      In any case, try running the standard jasmine command to get better errors:
+This implies one of five things:
+0) Your JS files had exactly zero instructions. Are they all blank or just comments?
+1) A test failed (run bundle exec rake jasmine:headless to see a better error)
+2) The sourcecode has a syntax error (which JSLint should find)
+3) An error occurred in a deferred block, e.g. a setTimeout or underscore _.defer. This caused a window error which Jasmine will never see.
+4) The source files are being loaded out of sequence (so global variables are not being declared in order)
+   To check this, run bundle exec jasmine-headless-webkit -l to see the ordering
 
-      bundle exec rake jasmine:headless
+In any case, try running the standard jasmine command to get better errors:
 
-      Finally, try opening the test-rig in firefox to see the tests run in a browser and get a stacktrace. Chrome has strict security settings
-      that make this difficult since it accesses the local filesystem from Javascript (but you can switch the settings off at the command line).
+bundle exec rake jasmine:headless
+
+Finally, try opening the test-rig in firefox to see the tests run in a browser and get a stacktrace. Chrome has strict security settings
+that make this difficult since it accesses the local filesystem from Javascript (but you can switch the settings off at the command line).
 
 
-      **********************************************************************************************
+**********************************************************************************************
 
-      The test rig file needs to load JS directly off disk, which Chrome prevents by default. Your best bet is to open the rig in Firefox.
+The test rig file needs to load JS directly off disk, which Chrome prevents by default. Your best bet is to open the rig in Firefox.
 
-      The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
+The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
 
-      **********************************************************************************************
+**********************************************************************************************
 
       EOS
 
