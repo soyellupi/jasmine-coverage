@@ -50,22 +50,35 @@ if env =~ /^(development|test)$/
 
           :reporters => [['File', "#{output_dir}/rawreport.txt"]]
       )
-      errStr = "JSCoverage exited with error code: #{status_code}.\nThis implies one of five things:\n"
-      errStr = errStr +"0) Your JS files had exactly zero instructions. Are they all blank or just comments?\n"
-      errStr = errStr +"1) A test failed (run bundle exec rake jasmine:headless to see a better error)\n"
-      errStr = errStr +"2) The sourcecode has a syntax error (which JSLint should find)\n"
-      errStr = errStr +"3) An error occurred in a deferred block, eg a setTimeout or underscore _.defer. This caused a window error which Jasmine will never see.\n"
-      errStr = errStr +"4) The source files are being loaded out of sequence (so global variables are not being declared in order)\n"
-      errStr = errStr +"   To check this, run bundle exec jasmine-headless-webkit -l to see the ordering\n"
-      errStr = errStr +"\nIn any case, try running the standard jasmine command to get better errors:\n\nbundle exec rake jasmine:headless\n"
-      errStr = errStr +"\nFinally, try opening the test-rig in firefox to see the tests run in a browser and get a stacktrace. "
-      errStr = errStr +"Chrome has strict security settings that make this difficult since it accesses the local filesystem from Javascript (but you can switch the settings off at the command line)\n\n"
-      errStr = errStr +"\n**********************************************************************************************\n"
-      errStr = errStr +"\nThe test rig file needs to load JS directly off disk, which Chrome prevents by default. Your best bet is to open the rig in Firefox.\n"
-      errStr = errStr +"\nThe file can be found here: #{test_rig_folder}/jscoverage-test-rig.html\n"
-      errStr = errStr +"\n**********************************************************************************************\n"
-      fail errStr if status_code == 1
+      errStr = <<-EOS
+      JSCoverage exited with error code: #{status_code}.
+      This implies one of five things:
+      0) Your JS files had exactly zero instructions. Are they all blank or just comments?
+      1) A test failed (run bundle exec rake jasmine:headless to see a better error)
+      2) The sourcecode has a syntax error (which JSLint should find)
+      3) An error occurred in a deferred block, e.g. a setTimeout or underscore _.defer. This caused a window error which Jasmine will never see.
+      4) The source files are being loaded out of sequence (so global variables are not being declared in order)
+         To check this, run bundle exec jasmine-headless-webkit -l to see the ordering
 
+      In any case, try running the standard jasmine command to get better errors:
+
+      bundle exec rake jasmine:headless
+
+      Finally, try opening the test-rig in firefox to see the tests run in a browser and get a stacktrace. Chrome has strict security settings
+      that make this difficult since it accesses the local filesystem from Javascript (but you can switch the settings off at the command line).
+
+
+      **********************************************************************************************
+
+      The test rig file needs to load JS directly off disk, which Chrome prevents by default. Your best bet is to open the rig in Firefox.
+
+      The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
+
+      **********************************************************************************************
+
+      EOS
+
+      fail errStr if status_code == 1
       # Delete the test_rig folder if not required
       if ENV['JASMINE_COVERAGE_KEEP_TEST_RIG']
         p "A copy of the page and files that were used as the jasmine test environment can be found here: #{test_rig_folder}"
