@@ -92,7 +92,8 @@ The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
       # Get our Base64.
       json_report_enc = contents.split(/ENCODED-COVERAGE-EXPORT-STARTS:/m)[1]
       # Provide warnings to use
-      warnings = contents.scan /^CONSOLE\|\|"WARNING.{4}(.*).$/
+      warning_regex = /^CONSOLE\|\|.{1,6}WARNING.{4}(.*).{5}$/
+      warnings = contents.scan warning_regex
       if (warnings.length != 0)
         puts "Detected #{warnings.length} warnings:"
         puts warnings
