@@ -91,6 +91,15 @@ The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
       contents = File.open("#{output_dir}/rawreport.txt") { |f| f.read }
       # Get our Base64.
       json_report_enc = contents.split(/ENCODED-COVERAGE-EXPORT-STARTS:/m)[1]
+      # Provide warnings to use
+      warnings = contents.scan /^CONSOLE\|\|"WARNING.{4}(.*).$/
+      if (warnings.length != 0)
+        puts "Detected #{warnings.length} warnings:"
+        puts warnings
+        fail "Aborting. All lines must be covered by a test." if ENV['MUST_COVER_ALL']
+      else
+        puts "No warnings detected."
+      end if
       # Remove the junk at the end
       json_report_enc_stripped = json_report_enc[0, json_report_enc.index("\"")]
 
