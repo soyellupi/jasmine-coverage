@@ -23,7 +23,6 @@ module Jasmine::Headless
 
       # Here we must also copy the spec and app folders to that we have access to all the files if we need them for the test rig
       FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../../spec", "#{test_rigfolder}/spec")
-      FileUtils.copy_entry("#{Jasmine::Coverage.output_dir}/../../app", "#{test_rigfolder}/app")
 
       jss = str.scan(/<script type="text\/javascript" src="(.*)"><\/script>/)
       jss << str.scan(/<link rel="stylesheet" href="(.*)" type="text\/css" \/>/)

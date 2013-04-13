@@ -26,9 +26,7 @@ if env =~ /^(development|test)$/
 
       # The reprocessing folder map
       files_map = {
-          File.expand_path('app/assets/javascripts') => instrumented_dir+'app',
-          File.expand_path('lib/assets/javascripts') => instrumented_dir+'lib',
-          File.expand_path('public/javascripts') => instrumented_dir+'public'
+          ENV['JS_SRC_PATH'] ? ENV['JS_SRC_PATH'] : File.expand_path('public/javascripts') => instrumented_dir+'public'
       }
 
       # Instrument the source files into the instrumented folders
