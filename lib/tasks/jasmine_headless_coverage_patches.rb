@@ -63,7 +63,7 @@ module Jasmine::Headless
 
     def to_html(files)
       # Declare our test runner files
-      cov_files = ['/jscoverage.js', '/coverage_output_generator.js']
+      cov_files = ['/jscoverage.js', '/base64.min.js', '/coverage_output_generator.js']
 
       # Add the original files, remapping to instrumented where necessary
       tags = []
