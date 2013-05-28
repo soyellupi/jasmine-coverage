@@ -25,8 +25,10 @@ if env =~ /^(development|test)$/
       FileUtils.mkdir_p instrumented_dir
 
       # The reprocessing folder map
-      files_map = {
-          ENV['JS_SRC_PATH'] ? ENV['JS_SRC_PATH'] : File.expand_path('public/javascripts') => instrumented_dir+'public'
+      files_map = ENV['JS_SRC_PATH'] ? ENV['JS_SRC_PATH'] : {
+        File.expand_path('app/assets/javascripts') => instrumented_dir+'app',
+        File.expand_path('lib/assets/javascripts') => instrumented_dir+'lib',
+        File.expand_path('public/javascripts') => instrumented_dir+'public',
       }
 
       # Instrument the source files into the instrumented folders
@@ -44,9 +46,9 @@ if env =~ /^(development|test)$/
 
       # Run Jasmine using the original config.
       status_code = Jasmine::Headless::Runner.run(
-          # Any options from the options.rb file in jasmine-headless-webkit can be used here.
+        # Any options from the options.rb file in jasmine-headless-webkit can be used here.
 
-          :reporters => [['File', "#{output_dir}/rawreport.txt"]]
+        :reporters => [['File', "#{output_dir}/rawreport.txt"]]
       )
       errStr = <<-EOS
 JSCoverage exited with error code: #{status_code}
@@ -99,8 +101,8 @@ The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
       else
         puts "No warnings detected."
       end if
-      # Remove the junk at the end
-      json_report_enc_stripped = json_report_enc[0, json_report_enc.index("\"")]
+        # Remove the junk at the end
+        json_report_enc_stripped = json_report_enc[0, json_report_enc.index("\"")]
 
       # Unpack it from Base64
       json_report = Base64.decode64(json_report_enc_stripped)
