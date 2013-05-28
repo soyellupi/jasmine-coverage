@@ -59,6 +59,10 @@ it generates regardless, you can specify that in an environment variable.
 
     bundle exec rake jasmine:coverage JASMINE_COVERAGE_KEEP_TEST_RIG=true
 
+You can also specify if you want missing coverage warnings
+
+    bundle exec rake jasmine:coverage JASMINE_COVERAGE_WARNINGS=true
+
 # How it works
 
 First Sprockets is interrogated to get a list of JS files concerned. This way, the right JS files
