@@ -50,6 +50,8 @@ module Jasmine::Headless
       ret
     end
 
+    private
+
     def copy_assets_to_test_dir(test_rigfolder, from_dir, to_dir)
       if File.exists? "#{Jasmine::Coverage.output_dir}/#{from_dir}"
         FileUtils.mkdir_p "#{test_rigfolder}/#{to_dir}"
@@ -89,6 +91,8 @@ module Jasmine::Headless
       # Attach the "in context" test runners
       tags = tags + old_to_html(cov_files.map { |f| File.dirname(__FILE__)+f })
 
+      add_coverage_js_config(tags)
+
       tags
     end
 
@@ -100,6 +104,18 @@ module Jasmine::Headless
       # Add the location of our jscoverage.js
       @sprockets_environment.append_path(File.dirname(__FILE__))
       @sprockets_environment
+    end
+
+    private
+
+    # This method injects the config we have defined in Ruby that needs to be present in the JS context
+    def add_coverage_js_config(tags)
+      cov_conf = "#{Jasmine::Coverage.output_dir}/coverage_config.js"
+      tags << "<script type=\"text/javascript\" src=\"#{cov_conf}\"></script>"
+
+      aFile = File.new(cov_conf, "w")
+      aFile.write("var JasmineCoverage = { warnings: #{Jasmine::Coverage.warnings}}")
+      aFile.close
     end
   end
 end

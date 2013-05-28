@@ -38,6 +38,7 @@ if env =~ /^(development|test)$/
         FileUtils.mv(Dir.glob(files_map[folder]+'/jscoverage*'), output_dir)
       end
 
+      Jasmine::Coverage.warnings = ENV['JASMINE_COVERAGE_WARNINGS'] || 'false'
       Jasmine::Coverage.resources = files_map
       Jasmine::Coverage.output_dir = output_dir
       test_rig_folder = "#{Jasmine::Coverage.output_dir}/test-rig"
@@ -143,6 +144,8 @@ The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
   module Jasmine
     module Coverage
       @resources
+      @output_dir
+      @warnings
 
       def self.resources= resources
         @resources = resources
@@ -152,14 +155,20 @@ The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
         @resources
       end
 
-      @output_dir
-
       def self.output_dir= output_dir
         @output_dir = output_dir
       end
 
       def self.output_dir
         @output_dir
+      end
+
+      def self.warnings= warnings
+        @warnings = warnings
+      end
+
+      def self.warnings
+        @warnings
       end
     end
   end
