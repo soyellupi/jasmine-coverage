@@ -24,8 +24,8 @@ if env =~ /^(development|test)$/
       FileUtils.rm_rf output_dir
       FileUtils.mkdir_p instrumented_dir
 
-      # The reprocessing folder map
-      files_map = ENV['JS_SRC_PATH'] ? ENV['JS_SRC_PATH'] : {
+      # The reprocessing folder map. Use an environment variable if available.
+      files_map = ENV['JS_SRC_PATH'] ? {ENV['JS_SRC_PATH'] => instrumented_dir+'public'} : {
         File.expand_path('app/assets/javascripts') => instrumented_dir+'app',
         File.expand_path('lib/assets/javascripts') => instrumented_dir+'lib',
         File.expand_path('public/javascripts') => instrumented_dir+'public',
