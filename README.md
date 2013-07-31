@@ -1,4 +1,4 @@
-# Jasmine Coverage
+## Jasmine Coverage
 
 A transcendent blend of useful JS unit testing and colourful coverage graphs.
 
@@ -8,7 +8,7 @@ failing it if it falls below a configurable level.
 
 Coverage is provided by the [jscoverage](http://siliconforks.com/jscoverage/manual.html) project.
 
-# Installation
+## Installation
 
 First, ensure you have a binary of [jscoverage](http://siliconforks.com/jscoverage/manual.html)
 available on your path. The installation steps are on the webpage.
@@ -24,13 +24,13 @@ Finally, add this to your Rakefile
 
     require 'jasmine/coverage'
 
-# Usage
+## Usage
 
 To use jasmine-coverage, run the rake task.
 
     bundle exec rake jasmine:coverage
 
-# Output
+## Output
 
 You will see the tests execute, then a large blob of text, and finally a summary of the test coverage results.
 An HTML file will also be saved that lets you view the results graphically, but only if served up from a server,
@@ -47,7 +47,7 @@ Files generated will be
     target/jscoverage/jscoverage.json  -  The report data
     target/jscoverage/jscoverage-test-rig.html  -  The actual page that the tests executed in
 
-# Configuration
+## Configuration
 
 You can set a failure level percentage.
 
@@ -63,7 +63,7 @@ You can also specify if you want missing coverage warnings
 
     bundle exec rake jasmine:coverage JASMINE_COVERAGE_WARNINGS=true
 
-# How it works
+## How it works
 
 First Sprockets is interrogated to get a list of JS files concerned. This way, the right JS files
 are required *in the same order that your app uses them*. JSCoverage then runs over them, and outputs the
@@ -75,3 +75,12 @@ a large block of Base64 encoded rubbish flying past as the build progresses. The
 Coverage, which decodes it and builds the results HTML page, and gives a short summary in the console.
 
 You're done.
+
+## Mac Support
+
+The tool uses the headless gem, which needs to create an X virtual frame buffer. Linux machines should work out the box, 
+but since Mac uses Quartz, you may get 
+
+    Xvfb not found on your system
+    
+To solve that just install XQuartz and add /usr/X11/bin to your PATH (thanks @shell).
