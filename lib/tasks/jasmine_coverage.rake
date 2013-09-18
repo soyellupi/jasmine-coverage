@@ -43,13 +43,14 @@ if env =~ /^(development|test)$/
       Jasmine::Coverage.output_dir = output_dir
       test_rig_folder = "#{Jasmine::Coverage.output_dir}/test-rig"
 
-      puts "\nCoverage will now be run. Expect a large block of compiled coverage data. This will be processed for you into target/jscoverage.\n\n"
+      rr_file = "#{output_dir}/rawreport.txt"
+      puts "\nCoverage will now be run. Expect a large block of compiled coverage data. This will be processed for you into target/jscoverage (#{rr_file}).\n\n"
 
       # Run Jasmine using the original config.
       status_code = Jasmine::Headless::Runner.run(
         # Any options from the options.rb file in jasmine-headless-webkit can be used here.
 
-        :reporters => [['File', "#{output_dir}/rawreport.txt"]]
+        :reporters => [['File', rr_file]]
       )
       errStr = <<-EOS
 JSCoverage exited with error code: #{status_code}
