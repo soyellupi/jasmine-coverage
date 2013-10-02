@@ -46,21 +46,32 @@ if env =~ /^(development|test)$/
       rr_file = "#{output_dir}/rawreport.txt"
       puts "\nCoverage will now be run. Expect a large block of compiled coverage data. This will be processed for you into target/jscoverage (#{rr_file}).\n\n"
 
+      # Check we can write to the output file
+      begin
+        File.open(rr_file, 'w') { |f| f.write('test-write') }
+        File.delete(rr_file)
+      rescue
+        raise "There was an error writing to the report file #{rr_file}.\nDo you have permissions to do so?"
+      end
+
       # Run Jasmine using the original config.
       status_code = Jasmine::Headless::Runner.run(
         # Any options from the options.rb file in jasmine-headless-webkit can be used here.
 
-        :reporters => [['File', rr_file]]
+        :reporters => [['Console'], ['File', rr_file]]
       )
       errStr = <<-EOS
+**********************************************************************************************
+
 JSCoverage exited with error code: #{status_code}
 
-This implies one of five things:
+This implies one of six things:
 0) Your JS files had exactly zero instructions. Are they all blank or just comments?
-1) A test failed (run bundle exec rake jasmine:headless to see a better error)
-2) The sourcecode has a syntax error (which JSLint should find)
-3) An error occurred in a deferred block, e.g. a setTimeout or underscore _.defer. This caused a window error which Jasmine will never see.
-4) The source files are being loaded out of sequence (so global variables are not being declared in order)
+1) The Jasmine Headless gem failed. Run bundle exec rake jasmine:headless to see what it might be.
+2) A test failed - you should be able to see the errors just above this text block (or run bundle exec rake jasmine:headless to see a simple error without coverage).
+3) The sourcecode has a syntax error (which JSLint should find)
+4) An error occurred in a deferred block, e.g. a setTimeout or underscore _.defer. This caused a window error which Jasmine will never see.
+5) The source files are being loaded out of sequence (so global variables are not being declared in order)
    To check this, run bundle exec jasmine-headless-webkit -l to see the ordering
 
 In any case, try running the standard jasmine command to get better errors:
@@ -69,10 +80,6 @@ bundle exec rake jasmine:headless
 
 Finally, try opening the test-rig in firefox to see the tests run in a browser and get a stacktrace. Chrome has strict security settings
 that make this difficult since it accesses the local filesystem from Javascript (but you can switch the settings off at the command line).
-
-
-**********************************************************************************************
-
 The test rig file needs to load JS directly off disk, which Chrome prevents by default. Your best bet is to open the rig in Firefox.
 
 The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
@@ -83,14 +90,14 @@ The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
 
       fail errStr if status_code == 1
       # Delete the test_rig folder if not required
-      if ENV['JASMINE_COVERAGE_KEEP_TEST_RIG']
-        p "A copy of the page and files that were used as the jasmine test environment can be found here: #{test_rig_folder}"
-      else
+      if ENV['JASMINE_COVERAGE_KEEP_TEST_RIG'] == 'false'
         FileUtils.rm_rf test_rig_folder
+      else
+        p "A copy of the page and files that were used as the jasmine test environment can be found here: #{test_rig_folder}"
       end
 
       # Obtain the console log, which includes the coverage report encoded within it
-      contents = File.open("#{output_dir}/rawreport.txt") { |f| f.read }
+      contents = File.open(rr_file) { |f| f.read }
       # Get our Base64.
       json_report_enc = contents.split(/ENCODED-COVERAGE-EXPORT-STARTS:/m)[1]
       # Provide warnings to use

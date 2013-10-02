@@ -54,10 +54,10 @@ You can set a failure level percentage.
     bundle exec rake jasmine:coverage JASMINE_COVERAGE_MINIMUM=75
 
 In addition, as jasmine-coverage has to create a single folder environment for the Javascript sandbox to function correctly, it has to copy
-files into the _target/jscoverage/test-rig_ folder. By default, this is then cleaned up for you if the tests pass. If you'd like to see what files
-it generates regardless, you can specify that in an environment variable.
+files into the _target/jscoverage/test-rig_ folder. By default, this is left for you if the tests pass. If you'd like it cleaned up,
+you can specify that in an environment variable.
 
-    bundle exec rake jasmine:coverage JASMINE_COVERAGE_KEEP_TEST_RIG=true
+    bundle exec rake jasmine:coverage JASMINE_COVERAGE_KEEP_TEST_RIG=false
 
 You can also specify if you want missing coverage warnings
 
