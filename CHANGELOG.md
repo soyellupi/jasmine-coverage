@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.2.6
+
+ * Cleaning out the old test rig folder before a new run
+
+
 ## 0.2.5
 
  * Inverted JASMINE_COVERAGE_KEEP_TEST_RIG default. It now keeps it unless specified as false.

@@ -14,6 +14,7 @@ module Jasmine::Headless
 
       test_rigfolder = Jasmine::Coverage.output_dir+"/test-rig"
       FileUtils.mkdir_p test_rigfolder
+      FileUtils.rm_rf(Dir.glob("#{test_rigfolder}/*")) # Clean out the old files
 
       p "Copying all view files and potential javascript fixture folders so the jasmine-coverage run has access to the html fixtures."
       copy_assets_to_test_dir(test_rigfolder, '../fixtures', 'target/fixtures')
