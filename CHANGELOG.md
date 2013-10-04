@@ -2,6 +2,7 @@
 
 ## 0.2.6
 
+ * Adding license (MIT)
  * Cleaning out the old test rig folder before a new run
 
 
