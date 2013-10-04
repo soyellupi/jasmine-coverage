@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.email = ['harry@harrylascelles.com']
   s.homepage = 'https://github.com/firstbanco/jasmine-coverage'
   s.summary = 'A blend of JS unit testing and coverage'
+  s.license = 'MIT'
 
   s.files = Dir["{lib}/**/*"] + ["README.md", 'Rakefile']
   s.require_paths = ['lib']
