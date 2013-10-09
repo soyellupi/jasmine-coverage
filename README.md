@@ -13,16 +13,13 @@ Coverage is provided by the [jscoverage](http://siliconforks.com/jscoverage/manu
 First, ensure you have a binary of [jscoverage](http://siliconforks.com/jscoverage/manual.html)
 available on your path. The installation steps are on the webpage.
 
-Then, add the following in your Gemfile. Note, there were a raft of small issues with older versions
-of [Jasmine Headless Webkit](http://johnbintz.github.com/jasmine-headless-webkit/), so for the moment you must use
-the master branch of that project.
-
     gem 'jasmine-coverage'
-    gem 'jasmine-headless-webkit', :git => 'git://github.com/johnbintz/jasmine-headless-webkit.git'
 
 Finally, add this to your Rakefile
 
     require 'jasmine/coverage'
+
+Note, the requirement to have the git branch of the jasmine-headless-webkit gem is no longer necessary.
 
 ## Usage
 

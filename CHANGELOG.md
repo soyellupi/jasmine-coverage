@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.2.7
+
+ * Accepted that jasmine-headless-coverage pull request will never be accepted, so cut own gem
+ * Merged in jasmine-headless-coverage fix for QT 4.8
+
+
 ## 0.2.6
 
  * Adding license (MIT)

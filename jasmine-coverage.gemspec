@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'jasmine-headless-webkit', '>=0.9.0.rc.2'
+  s.add_dependency 'jasmine-headless-webkit-firstbanco', '0.9.0.rc.3'
   s.add_dependency 'coffee-script-source'
   s.add_dependency 'headless'
 end
