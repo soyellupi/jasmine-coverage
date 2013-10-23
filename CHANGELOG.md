@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.8
+
+ * Adding better error if you try and run two tests simultaneously (which crashes the shared virtual frame buffer)
+
 ## 0.2.7
 
  * Accepted that jasmine-headless-coverage pull request will never be accepted, so cut own gem
