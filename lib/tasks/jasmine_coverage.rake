@@ -111,7 +111,7 @@ The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
         puts "No warnings detected."
       end if
         # Remove the junk at the end
-        json_report_enc_stripped = json_report_enc[0, json_report_enc.index("\"")]
+        json_report_enc_stripped = json_report_enc[0, json_report_enc.index("\"")] rescue json_report_enc_stripped
 
       # Unpack it from Base64
       json_report = Base64.decode64(json_report_enc_stripped)
