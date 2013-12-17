@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.9
+
+ * Locking jasmine-core version to 1.3.1, as 2.0.0 had breaking changes.
+
 ## 0.2.8
 
  * Adding better error if you try and run two tests simultaneously (which crashes the shared virtual frame buffer)
