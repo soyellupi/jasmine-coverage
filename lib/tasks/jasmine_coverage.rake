@@ -6,6 +6,9 @@ if env =~ /^(development|test)$/
   namespace :jasmine do
     desc 'Runs jasmine with a coverage report'
     task :coverage do
+      spec = Gem::Specification.find_by_name("jasmine-headless-webkit-firstbanco")
+      specrunner_executable = "#{spec.gem_dir}/ext/jasmine-webkit-specrunner/jasmine-webkit-specrunner"
+      raise "Gem jasmine-headless-webkit-firstbanco was not installed properly. A compiled executable is not available at #{specrunner_executable}" unless File.exist?(specrunner_executable)
 
       require 'jasmine-headless-webkit'
       # Instill our patches for jasmine-headless to work
@@ -63,7 +66,7 @@ if env =~ /^(development|test)$/
       errStr = <<-EOS
 **********************************************************************************************
 
-JSCoverage exited with error code: #{status_code}
+JSCoverage or Jasmine Headless Webkit exited with error code: #{status_code}
 
 This implies one of six things:
 0) Your JS files had exactly zero instructions. Are they all blank or just comments?

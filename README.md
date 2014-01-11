@@ -10,8 +10,11 @@ Coverage is provided by the [jscoverage](http://siliconforks.com/jscoverage/manu
 
 ## Installation
 
-First, ensure you have a binary of [jscoverage](http://siliconforks.com/jscoverage/manual.html)
-available on your path. The installation steps are on the webpage.
+First, make sure you have jscoverage and qtmake installed. Qtmake is required by a gem we depend on called jasmine-headless-webkit. Eg on Linux:
+
+    sudo apt-get install jscoverage libqtwebkit-dev qt4-dev-tools
+
+Then add jasmine-coverage to your Gemfile
 
     gem 'jasmine-coverage'
 

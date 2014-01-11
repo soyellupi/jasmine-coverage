@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.0
+
+ * Adding checks to see if the needed gem jasmine-headless-webkit had compiled correctly.
+
 ## 0.2.9
 
  * Locking jasmine-core version to 1.3.1, as 2.0.0 had breaking changes.
