@@ -87,8 +87,9 @@ The file can be found here: #{test_rig_folder}/jscoverage-test-rig.html
 **********************************************************************************************
 
       EOS
+      p "Jasmine Coverage ran jasmine-headless-webkit and it returned status code #{status_code}"
 
-      fail errStr if status_code == 1
+      fail errStr if status_code == 1 || !File.exist?(rr_file)
       # Delete the test_rig folder if not required
       if ENV['JASMINE_COVERAGE_KEEP_TEST_RIG'] == 'false'
         FileUtils.rm_rf test_rig_folder
