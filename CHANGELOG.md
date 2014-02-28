@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.1
+
+ * Locking Rails version to 3.2.x
+
 ## 0.3.0
 
  * Adding checks to see if the needed gem jasmine-headless-webkit had compiled correctly.

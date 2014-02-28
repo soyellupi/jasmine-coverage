@@ -8,6 +8,8 @@ failing it if it falls below a configurable level.
 
 Coverage is provided by the [jscoverage](http://siliconforks.com/jscoverage/manual.html) project.
 
+Rails 4 is not yet supported.
+
 ## Installation
 
 First, make sure you have jscoverage and qtmake installed. Qtmake is required by a gem we depend on called jasmine-headless-webkit. Eg on Linux:

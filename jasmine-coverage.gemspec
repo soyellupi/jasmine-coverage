@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'jasmine-headless-webkit-firstbanco', '0.9.0.rc.5'
   s.add_dependency 'coffee-script-source'
   s.add_dependency 'headless'
+  s.add_dependency 'rails' '< 4.0.0' # Rails 4 is not yet supported
 end
