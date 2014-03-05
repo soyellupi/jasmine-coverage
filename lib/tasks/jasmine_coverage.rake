@@ -57,12 +57,14 @@ if env =~ /^(development|test)$/
         raise "There was an error writing to the report file #{rr_file}.\nDo you have permissions to do so?"
       end
 
-      # Run Jasmine using the original config.
-      status_code = Jasmine::Headless::Runner.run(
-        # Any options from the options.rb file in jasmine-headless-webkit can be used here.
+      # Any options from the options.rb file in jasmine-headless-webkit can be used here.
+      runner_options = {
+          :reporters => [['Console'], ['File', rr_file]]
+      }
 
-        :reporters => [['Console'], ['File', rr_file]]
-      )
+      runner_options.merge!(:jasmine_config => ENV['JASMINE_CONFIG']) if ENV['JASMINE_CONFIG']
+
+      status_code = Jasmine::Headless::Runner.run(runner_options)
       errStr = <<-EOS
 **********************************************************************************************
 
