@@ -31,6 +31,10 @@ Note, the requirement to have the git branch of the jasmine-headless-webkit gem 
 To use jasmine-coverage, run the rake task.
 
     bundle exec rake jasmine:coverage
+    
+To specify a different path for jasmine config file (by default is 'spec/javascripts/support/jasmine.yml')
+
+    bundle exec rake jasmine:coverage JASMINE_CONFIG='path/to/jasmine.yml'
 
 ## Output
 
